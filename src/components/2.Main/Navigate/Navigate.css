@@ -1,0 +1,51 @@
+.wrap {
+  background: #ffffff;
+  border-radius: 30px;
+  height: 426px;
+  box-shadow: 10px 16px 19px rgba(0, 0, 0, 0.25),
+    0px -3px 9px rgba(0, 0, 0, 0.25);
+  margin: 14px 0px 0px 3px;
+  text-align: left;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+  text-transform: uppercase;
+  color: #000000;
+  border-bottom: 1px solid #a3a3a3;
+  padding: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #000000;
+  border-bottom: 1px solid #a3a3a3;
+  padding: 10px;
+  padding-top: 15px;
+  letter-spacing: 1.5px;
+}
+
+.btn:hover {
+  background-color: aquamarine;
+}
+
+.btn.active {
+  color: #0047ff;
+}
