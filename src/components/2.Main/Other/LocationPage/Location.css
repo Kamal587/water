@@ -20,6 +20,11 @@
   text-align: left;
   margin: 20px;
 }
+
+.delete {
+  width: 15px;
+  cursor: pointer;
+}
 .titlePage {
   font-family: "Inter";
   font-style: normal;
@@ -48,6 +53,17 @@ table th {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+}
+
+table {
+  counter-reset: row-num;
+}
+table tbody tr {
+  counter-increment: row-num;
+}
+
+table tr td:first-child::before {
+  content: counter(row-num);
 }
 
 table tr:nth-child(even) {

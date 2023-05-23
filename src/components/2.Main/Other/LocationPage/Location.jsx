@@ -4,19 +4,21 @@ import { useTable } from "react-table";
 import Modal from "../../../Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocal } from "../../../../redux/slice";
+import del2 from "./../../../../assets/del2.png";
+import { v4 as uuidv4 } from "uuid";
 
-const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
-  const [data, setData] = useState([]);
-
+const Location = ({ modalActive, setModalActive }) => {
   const dispatch = useDispatch();
-  const localDate = useSelector((state) => state.location.location);
-  console.log(localDate);
-  // const [valueProd, setValueProd] = useState();
-  // const [valueShop, setValueShop] = useState();
-  // const [valueSite, setValueSite] = useState();
-  // const [valueFloor, setValueFloor] = useState();
-  // const [valueRoom, setValueRoom] = useState();
 
+  const [datas, setDatas] = useState([]);
+  console.log(datas);
+  const [formData, setFormData] = useState([]);
+  const localDate = useSelector((state) => state.location.location);
+  const data = useMemo(() => datas, [datas]);
+  const { v4: uuidv4 } = require("uuid");
+  useEffect(() => {
+    setDatas(localDate);
+  }, [formData]);
   const columns = React.useMemo(
     () => [
       {
@@ -25,7 +27,7 @@ const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
       },
       {
         Header: "ПРОИЗВОДСТВО",
-        accessor: "production",
+        accessor: "product",
       },
       {
         Header: "ЦЕХ",
@@ -46,10 +48,22 @@ const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
       {
         Header: "УПРАВЛЕНИЕ",
         accessor: "control",
+
+        Cell: (tableProps) => (
+          <img
+            src={del2}
+            className="delete"
+            onClick={() => deleteRow(tableProps)}
+          ></img>
+        ),
       },
     ],
     []
   );
+  const deleteRow = (tableProps) => {
+    console.log(tableProps);
+  };
+  const handleModalClick = () => {};
 
   const checkModul = () => {
     setModalActive(true);
@@ -59,27 +73,30 @@ const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
     useTable({ columns, data });
 
   const handleSubmit = (event) => {
+    formData.length > 0 && setDatas(localDate);
+    uuidv4();
     event.preventDefault();
+    console.log(event);
+    console.log(formData);
+
     dispatch(
       setLocal({
-        location: formData,
+        formData,
       })
     );
-    console.log(event.target.product);
-    console.log(formData);
+
     setFormData([]);
     event.target.product.value = "";
     event.target.shop.value = "";
+    event.target.site.value = "";
+    event.target.floor.value = "";
+    event.target.room.value = "";
     setModalActive(false);
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((values) => ({ ...values, [name]: value }));
-  };
-
-  const checkData = () => {
-    console.log("asd");
   };
 
   return (
@@ -92,6 +109,15 @@ const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
       <Modal modalActive={modalActive} setModalActive={setModalActive}>
         <div className="titleModal">СОЗДАТЬ МЕСТОПОЛОЖЕНИЕ</div>
         <form onSubmit={handleSubmit}>
+          <div className="formsBlog">
+            <label>ID</label>
+            <input
+              type="text"
+              name="id"
+              value={uuidv4()}
+              onChange={handleChange}
+            />
+          </div>
           <div className="formsBlog">
             <label>ПРОИЗВОДСТВО</label>
             <input
@@ -140,7 +166,9 @@ const Location = ({ formData, setFormData, modalActive, setModalActive }) => {
             />
           </div>
 
-          <button className="btnModal">СОЗДАТЬ</button>
+          <button className="btnModal" onClick={handleModalClick}>
+            СОЗДАТЬ
+          </button>
         </form>
       </Modal>
       <div className="titlePage">УПРАВЛЕНИЕ МЕСТОПОЛОЖЕНИЯМИ</div>

@@ -5,17 +5,16 @@ import Application from "./ApplicationPage/Application";
 import Location from "./LocationPage/Location";
 import Users from "./UsersPage/Users";
 
-const RouterPage = ({formData, setFormData, modalActive, setModalActive }) => {
+const RouterPage = ({ datas, setDatas, modalActive, setModalActive }) => {
   return (
     <Routes>
       <Route
         path="/"
         element={
           <Location
-            formData={formData}
-            setFormData={setFormData}
             modalActive={modalActive}
             setModalActive={setModalActive}
+            
           />
         }
       />
