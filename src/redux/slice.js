@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const initialState = {
   location: [],
@@ -9,7 +10,6 @@ const slice = createSlice({
   initialState,
   reducers: {
     setLocal(state, action) {
-      console.log(action);
       state.location.push({
         id: uuidv4(),
         product: action.payload.formData.product,
@@ -19,14 +19,27 @@ const slice = createSlice({
         room: action.payload.formData.room,
       });
     },
+    editLocal(state, action) {
+      console.log(action.payload);
+      let optID = action.payload.optionDate.option;
+      let valueOpt = action.payload.optionDate.name;
 
-    // removeLocal(state, action) {
-    //   localStorage.setItem("token", action.payload.token);
-    //   state.token = action.payload.token;
-    // },
+      state.location = state.location.map((trip) => {
+        if (trip.id === optID) {
+          return { ...trip, name: valueOpt };
+        }
+        return trip;
+      });
+    },
+
+    removeLocal(state, action) {
+      state.location = state.location.filter(
+        (local) => local.id !== action.payload.tableProps
+      );
+    },
   },
 });
 
-export const { setLocal, removeLocal } = slice.actions;
+export const { setLocal, removeLocal, editLocal } = slice.actions;
 
 export default slice.reducer;

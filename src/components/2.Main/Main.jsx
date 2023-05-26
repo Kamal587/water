@@ -9,18 +9,13 @@ import { useSelector } from "react-redux";
 const Main = () => {
   const [modalActive, setModalActive] = useState(false);
 
- 
   return (
     <div className={s.wrap}>
       <div className={s.menu}>
         <Navigate />
       </div>
       <div className={s.table}>
-        <RouterPage
-          modalActive={modalActive}
-          setModalActive={setModalActive}
-         
-        />
+        <RouterPage modalActive={modalActive} setModalActive={setModalActive} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import "./Location.css";
 import { useTable } from "react-table";
 import Modal from "../../../Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setLocal } from "../../../../redux/slice";
+import { removeLocal, setLocal } from "../../../../redux/slice";
 import del2 from "./../../../../assets/del2.png";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,14 +11,20 @@ const Location = ({ modalActive, setModalActive }) => {
   const dispatch = useDispatch();
 
   const [datas, setDatas] = useState([]);
-  console.log(datas);
+  const [abc, setAbc] = useState(0);
+
   const [formData, setFormData] = useState([]);
   const localDate = useSelector((state) => state.location.location);
   const data = useMemo(() => datas, [datas]);
   const { v4: uuidv4 } = require("uuid");
   useEffect(() => {
     setDatas(localDate);
-  }, [formData]);
+  }, [formData, abc]);
+
+  const deleteRow = (tableProps) => {
+    dispatch(removeLocal({ tableProps }));
+    setAbc(tableProps);
+  };
   const columns = React.useMemo(
     () => [
       {
@@ -47,23 +53,19 @@ const Location = ({ modalActive, setModalActive }) => {
       },
       {
         Header: "УПРАВЛЕНИЕ",
-        accessor: "control",
+        accessor: "id",
 
         Cell: (tableProps) => (
           <img
             src={del2}
             className="delete"
-            onClick={() => deleteRow(tableProps)}
+            onClick={() => deleteRow(tableProps.value)}
           ></img>
         ),
       },
     ],
     []
   );
-  const deleteRow = (tableProps) => {
-    console.log(tableProps);
-  };
-  const handleModalClick = () => {};
 
   const checkModul = () => {
     setModalActive(true);
@@ -73,17 +75,17 @@ const Location = ({ modalActive, setModalActive }) => {
     useTable({ columns, data });
 
   const handleSubmit = (event) => {
-    formData.length > 0 && setDatas(localDate);
+    setDatas(localDate);
     uuidv4();
     event.preventDefault();
     console.log(event);
     console.log(formData);
-
-    dispatch(
-      setLocal({
-        formData,
-      })
-    );
+    formData.product &&
+      dispatch(
+        setLocal({
+          formData,
+        })
+      );
 
     setFormData([]);
     event.target.product.value = "";
@@ -166,9 +168,7 @@ const Location = ({ modalActive, setModalActive }) => {
             />
           </div>
 
-          <button className="btnModal" onClick={handleModalClick}>
-            СОЗДАТЬ
-          </button>
+          <button className="btnModal">СОЗДАТЬ</button>
         </form>
       </Modal>
       <div className="titlePage">УПРАВЛЕНИЕ МЕСТОПОЛОЖЕНИЯМИ</div>
