@@ -8,13 +8,13 @@ const Navigate = () => {
       <div className="container">
         <div className="title">КАТЕГОРИИ</div>
         <nav className="menu">
-          <NavLink to="/" className="btn">
+          <NavLink to="place" className="btn">
             Местоположения
           </NavLink>
-          <NavLink to="/users" className="btn">
+          <NavLink to="users" className="btn">
             Пользователи
           </NavLink>
-          <NavLink to="/application" className="btn">
+          <NavLink to="application" className="btn">
             Заявки
           </NavLink>
         </nav>

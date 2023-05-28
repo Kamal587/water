@@ -88,7 +88,7 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
   };
 
   const handleOption = (e) => {
-    console.log(e.target.value);
+    e.target.value == "-- выберите --" && setDis(true);
     e.target.value && e.target.value !== "-- выберите --" && setDis(false);
     setOptionId(e.target.value);
   };
@@ -116,16 +116,17 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
           <div className="formsBlog">
             <label>ПРОИЗВОДСТВО</label>
             <select onChange={(e) => handleOption(e)}>
-              <option disabled>-- выберите --</option>
-              {localDate.map((item) => (
-                <option
-                  key={item.id}
-                  value={item.id}
-                  onChange={(e) => console.log(e)}
-                >
-                  {item.product}
-                </option>
-              ))}
+              <option selected>-- выберите --</option>
+              {localDate[0] &&
+                localDate.map((item) => (
+                  <option
+                    key={item.id}
+                    value={item.id}
+                    onChange={(e) => console.log(e)}
+                  >
+                    {item.product}
+                  </option>
+                ))}
             </select>
             {/* <select type="text" name="product" onChange={handleChange} /> */}
           </div>

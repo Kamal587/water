@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Main from "../Main";
-import Application from "./ApplicationPage/Application";
-import Location from "./LocationPage/Location";
-import Users from "./UsersPage/Users";
+import { Route, Routes } from "react-router-dom";
+
+import Application from "./Admin/ApplicationPage/Application";
+import Location from "./Admin/LocationPage/Location";
+import Users from "./Admin/UsersPage/Users";
 
 const RouterPage = ({ modalActive, setModalActive }) => {
   const localDate = useSelector((state) => state.location.location);
@@ -12,7 +12,7 @@ const RouterPage = ({ modalActive, setModalActive }) => {
   return (
     <Routes>
       <Route
-        path="/"
+        path="/place"
         element={
           <Location modalActive={modalActive} setModalActive={setModalActive} />
         }
@@ -20,7 +20,12 @@ const RouterPage = ({ modalActive, setModalActive }) => {
       <Route
         path="/users"
         element={
-          <Users localDate={localDate} nameDate={nameDate} modalActive={modalActive} setModalActive={setModalActive} />
+          <Users
+            localDate={localDate}
+            nameDate={nameDate}
+            modalActive={modalActive}
+            setModalActive={setModalActive}
+          />
         }
       />
       <Route path="/application" element={<Application />} />
