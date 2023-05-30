@@ -21,6 +21,18 @@
   margin: 20px;
 }
 
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textEdit {
+  margin-right: 20px;
+  color: blue;
+  font-weight: bold;
+}
+
 .delete {
   width: 15px;
   cursor: pointer;

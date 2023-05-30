@@ -21,6 +21,10 @@ const Location = ({ modalActive, setModalActive }) => {
     setDatas(localDate);
   }, [formData, abc]);
 
+  const editRow = (tableProps) => {
+    console.log(tableProps);
+  };
+
   const deleteRow = (tableProps) => {
     dispatch(removeLocal({ tableProps }));
     setAbc(tableProps);
@@ -56,11 +60,16 @@ const Location = ({ modalActive, setModalActive }) => {
         accessor: "id",
 
         Cell: (tableProps) => (
-          <img
-            src={del2}
-            className="delete"
-            onClick={() => deleteRow(tableProps.value)}
-          ></img>
+          <div className="control">
+            <div className="textEdit" onClick={() => editRow(tableProps)}>
+              EDIT
+            </div>
+            <img
+              src={del2}
+              className="delete"
+              onClick={() => deleteRow(tableProps.value)}
+            ></img>
+          </div>
         ),
       },
     ],
@@ -171,6 +180,71 @@ const Location = ({ modalActive, setModalActive }) => {
           <button className="btnModal">СОЗДАТЬ</button>
         </form>
       </Modal>
+
+      <Modal modalActive={modalActive} setModalActive={setModalActive}>
+        <div className="titleModal">СОЗДАТЬ МЕСТОПОЛОЖЕНИЕ</div>
+        <form onSubmit={handleSubmit}>
+          <div className="formsBlog">
+            <label>ID</label>
+            <input
+              type="text"
+              name="id"
+              value={uuidv4()}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="formsBlog">
+            <label>ПРОИЗВОДСТВО</label>
+            <input
+              type="text"
+              name="product"
+              value={formData.product}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="formsBlog">
+            <label>ЦЕХ</label>
+            <input
+              type="text"
+              name="shop"
+              value={formData.shop}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="formsBlog">
+            <label>УЧАСТОК</label>
+            <input
+              type="text"
+              name="site"
+              value={formData.site}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="formsBlog">
+            <label>ЭТАЖ</label>
+            <input
+              type="text"
+              name="floor"
+              value={formData.floor}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="formsBlog">
+            <label>КОМНАТА</label>
+            <input
+              type="text"
+              name="room"
+              value={formData.room}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button className="btnModal">СОЗДАТЬ</button>
+        </form>
+      </Modal>
+
       <div className="titlePage">УПРАВЛЕНИЕ МЕСТОПОЛОЖЕНИЯМИ</div>
       <table {...getTableProps()}>
         <thead>

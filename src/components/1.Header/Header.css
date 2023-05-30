@@ -1,15 +1,15 @@
-.wrap {
+.wrapper {
   background-color: #73b010;
 }
 
-.container {
+.containerHead {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 90px;
 }
 
-.title {
+.titleHead {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 300;
@@ -31,21 +31,22 @@
 .user {
   display: flex;
   padding-right: 30px;
+  margin-left: 10px;
 }
 
 .linkMenu {
   font-family: "Montserrat";
-
+  border-radius: 50%;
   padding: 30px 60px;
   color: #ffffff;
   text-decoration: none;
 }
 
 .linkMenu:hover {
-  background-color: #4c7707;
-  border-radius: 50%;
+  outline: 3px solid white;
   cursor: pointer;
 }
 .linkMenu.active {
-  background-color: #1f221b;
+  background-color: #4c7707;
+  border: 3px solid white;
 }

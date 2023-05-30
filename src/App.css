@@ -1,8 +1,8 @@
 .App {
   text-align: center;
   max-width: 1347px;
-  height: 858px;
+  box-sizing: border-box;
   border: 1px solid red;
   margin: 0px auto;
-  height: 858px;
+  height: 974px;
 }

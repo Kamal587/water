@@ -1,25 +1,25 @@
 import React from "react";
-import s from "./Header.module.css";
+import "./Header.css";
 import vector from "./../../assets/Vector.png";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className={s.wrap}>
-      <div className={s.container}>
-        <div className={s.title}>СИСТЕМА УЧЕТА ВОДЫ</div>
-        <div className={s.reg}>
-          <NavLink to="/" className={s.linkMenu}>
+    <div className="wrapper">
+      <div className="containerHead">
+        <div className="titleHead">СИСТЕМА УЧЕТА ВОДЫ</div>
+        <div className="reg">
+          <NavLink to="/" className="linkMenu">
             Главная
           </NavLink>
-          <NavLink to="/admin/place" className={s.linkMenu}>
+          <NavLink to="/admin/place" className="linkMenu">
             Админ
           </NavLink>
-          <div className={s.user}>
+          <div className="user">
             <img src={vector} alt="" />
-            <div className={s.name}>name</div>
+            <div className="name">name</div>
           </div>
-          <div className={s.out}>Выход</div>
+          <div className="out">Выход</div>
         </div>
       </div>
     </div>

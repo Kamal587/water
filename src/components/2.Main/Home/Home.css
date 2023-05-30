@@ -1,0 +1,200 @@
+.wrapperHome {
+  padding: 30px;
+}
+
+.containerHome {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 10px;
+}
+
+.blog {
+  max-width: 250px;
+  border: 5px solid green;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.prod {
+  padding: 10px;
+}
+
+.textBlog {
+  border-bottom: 3px solid teal;
+  padding-bottom: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 39px;
+  border-radius: 25px;
+  color: #000000;
+  background-color: aquamarine;
+}
+
+/*  */
+.mainHeadOff {
+  display: none;
+}
+.productOn {
+}
+.productOff,
+.blogShopOff,
+.blogSiteOff,
+.none,
+.blogFloorOff,
+.blogRoomOff,
+.btnAppliOff {
+  display: none;
+}
+
+.blogShop {
+  max-width: 250px;
+  border: 5px solid rgb(105, 116, 68);
+  border-radius: 30px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.textblogShop {
+  border-bottom: 3px solid teal;
+  padding-bottom: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 39px;
+  border-radius: 25px;
+  color: #000000;
+  background-color: rgb(124, 161, 158);
+}
+
+.shop {
+  padding: 10px;
+}
+
+.blogSite {
+  max-width: 250px;
+  border: 5px solid rgb(119, 77, 30);
+  border-radius: 30px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.textblogSite {
+  border-bottom: 3px solid teal;
+  padding-bottom: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 39px;
+  border-radius: 25px;
+  color: #000000;
+  background-color: rgb(173, 190, 123);
+}
+
+.site {
+  padding: 10px;
+}
+
+.blogFloor {
+  max-width: 250px;
+  border: 5px solid rgb(116, 68, 108);
+  border-radius: 30px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.textblogFloor {
+  border-bottom: 3px solid teal;
+  padding-bottom: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 39px;
+  border-radius: 25px;
+  color: #000000;
+  background-color: rgb(223, 157, 223);
+}
+
+.floor {
+  padding: 10px;
+}
+
+.blogRoom {
+  max-width: 250px;
+  border: 5px solid rgb(71, 108, 150);
+  border-radius: 30px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.textblogRoom {
+  border-bottom: 3px solid teal;
+  padding-bottom: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 39px;
+  border-radius: 25px;
+  color: #000000;
+  background-color: rgb(132, 181, 236);
+}
+
+.room {
+  padding: 10px;
+}
+
+.blogBtn {
+  cursor: pointer;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 29px;
+  text-transform: uppercase;
+
+  color: #642424;
+  border: 3px solid teal;
+  display: block;
+  width: 200px;
+  border-radius: 90px;
+  margin: 0px auto;
+}
+
+.blogBtn:hover {
+  outline: 3px solid green;
+}
+
+.btnAppli {
+  position: relative;
+  top: 10px;
+  right: 240px;
+  border: 1px solid #4285f4;
+  font-weight: bold;
+  outline: none;
+  background: #4285f4;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  line-height: 16px;
+  margin-left: 10px;
+  margin-right: 8px;
+  min-width: 96px;
+  padding: 9px 23px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btnAppli:hover {
+  background: #0548b3;
+}

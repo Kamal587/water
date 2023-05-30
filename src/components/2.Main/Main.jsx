@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
-import s from "./Main.module.css";
-import Location from "./Admin/LocationPage/Location";
 import Navigate from "./Navigate/Navigate";
-import RouterPage from "./RouterPage";
-import Modal from "../Modal/Modal";
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home/Home";
 import Admin from "./Admin/Admin";
-import Users from "./Admin/UsersPage/Users";
-import Application from "./Admin/ApplicationPage/Application";
+import "./Main.css";
 
 const Main = () => {
   return (
-    <div>
+    <div className="main">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Navigate to="/admin/place" />}>
