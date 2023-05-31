@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { editWater } from "../../../redux/slice";
 import Modal from "../../Modal/Modal";
 
 import "./Home.css";
@@ -11,11 +12,12 @@ const Home = () => {
   const [blogFloor, setBlogFloor] = useState(true);
   const [blogSite, setBlogSite] = useState(true);
   const [blogRoom, setBlogRoom] = useState(true);
-  const [btn, setBtn] = useState(true);
+  const [titleRoom, setTitleRoom] = useState();
+  const [valueAppli, setValueAppli] = useState(0);
   const [modalActive, setModalActive] = useState(false);
   const data = useSelector((state) => state.location.location);
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
-
+  const dispatch = useDispatch();
   useEffect(() => {}, [blogID]);
 
   const checkBlog = (id) => {
@@ -35,9 +37,28 @@ const Home = () => {
     }
 
     if (workArr.shop && !workArr.site && !workArr.floor && !workArr.room) {
-      setBtn(false);
+      setTitleRoom(workArr.shop);
+      setModalActive(true);
+    }
+    if (workArr.product && !workArr.site && !workArr.floor && workArr.room) {
+      setModalActive(true);
+      setTitleRoom(workArr.room);
+    }
+    if (
+      workArr.product &&
+      !workArr.shop &&
+      !workArr.site &&
+      workArr.floor &&
+      !workArr.room
+    ) {
+      setTitleRoom(workArr.floor);
+      setModalActive(true);
     }
   };
+
+  useEffect(() => {
+    !productBlog && checkBlogProduct();
+  }, [productBlog]);
 
   const checkBlogShop = () => {
     if (workArr.site) {
@@ -45,36 +66,49 @@ const Home = () => {
     } else if (!workArr.site && workArr.floor) {
       setBlogFloor(false);
     } else if (!workArr.floor && workArr.room) {
+      setTitleRoom(workArr.room);
       setBlogRoom(false);
-      setBtn(false);
+      setModalActive(true);
     }
 
     if (workArr.site && !workArr.floor && !workArr.room) {
-      setBtn(false);
+      setTitleRoom(workArr.site);
+      setModalActive(true);
+    }
+
+    if (!workArr.site && workArr.floor && !workArr.room) {
+      setTitleRoom(workArr.floor);
+      setModalActive(true);
     }
   };
   const checkBlogSite = () => {
     if (workArr.floor) {
       setBlogFloor(false);
     } else if (!workArr.floor && workArr.room) {
+      setTitleRoom(workArr.room);
       setBlogRoom(false);
-      setBtn(false);
+      setModalActive(true);
     }
 
     if (workArr.floor && !workArr.room) {
-      setBtn(false);
-      console.log("aaa");
+      setTitleRoom(workArr.floor);
+      setModalActive(true);
     }
   };
   const checkBlogFloor = () => {
     if (workArr.room) {
+      setTitleRoom(workArr.room);
       setBlogRoom(false);
-      setBtn(false);
+      setModalActive(true);
     }
 
     if (!workArr.room) {
-      setBtn(false);
+      setModalActive(true);
     }
+  };
+
+  const checkBlogRoom = () => {
+    setModalActive(true);
   };
 
   const btnProduct = () => {
@@ -97,11 +131,52 @@ const Home = () => {
     setBlogRoom(true);
   };
 
-  const handleClick = () => {
-    setModalActive(true);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let d = new Date();
+
+    let datestring =
+      d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
+    let time = d.getHours() + ":" + d.getMinutes();
+    console.log(time);
+    console.log(event);
+    console.log(blogID);
+    const waterDate = {
+      water: valueAppli,
+      waterId: blogID,
+      datestring,
+      time,
+    };
+    dispatch(
+      editWater({
+        waterDate,
+      })
+    );
+    setValueAppli(0);
+    setModalActive(false);
   };
 
-  const handleSubmit = () => {};
+  const oneCheck = (e) => {
+    e.preventDefault();
+    setValueAppli(+valueAppli + 1);
+  };
+
+  const twoCheck = (e) => {
+    e.preventDefault();
+    setValueAppli(+valueAppli + 5);
+  };
+
+  const minusOne = (e) => {
+    e.preventDefault();
+    +valueAppli > 0 && setValueAppli(+valueAppli - 1);
+  };
+
+  const minusFive = (e) => {
+    e.preventDefault();
+    +valueAppli >= 5 && setValueAppli(+valueAppli - 5);
+  };
+
+  const changeInput = (event) => setValueAppli(event.target.value);
 
   return (
     <div className="wrapperHome">
@@ -175,7 +250,10 @@ const Home = () => {
         </div>
 
         <div>
-          <div className={blogRoom ? "blogRoomOff" : "blogRoom"}>
+          <div
+            className={blogRoom ? "blogRoomOff" : "blogRoom"}
+            onClick={() => checkBlogRoom(workArr.room)}
+          >
             <div className="textblogRoom">КОМНАТА</div>
             <div className="room">{workArr && workArr.room}</div>
           </div>
@@ -186,28 +264,36 @@ const Home = () => {
             НАЗАД
           </div>
         </div>
-        <button
-          className={btn ? "btnAppliOff" : "btnAppli"}
-          onClick={handleClick}
-        >
-          создать заявку
-        </button>
+
         <Modal modalActive={modalActive} setModalActive={setModalActive}>
           <div className="titleAppli">СОЗДАТЬ ЗАЯВКУ</div>
+          <div className="modalApp">
+            <form onSubmit={handleSubmit}>
+              <div className="formAppli">
+                <label>Выбрать пользователя</label>
+                <input type="text" name="user" className="inputModal" />
+              </div>
+              <div className="formAppli">
+                <label>Количество бутылей</label>
+                <input
+                  type="number"
+                  value={valueAppli}
+                  name="product"
+                  onChange={changeInput}
+                  className="inputModal"
+                />
+              </div>
+              <div className="btnInp">
+                <button onClick={oneCheck}>+1</button>
+                <button onClick={twoCheck}>+5</button>
+                <button onClick={minusOne}>-1</button>
+                <button onClick={minusFive}>-5</button>
+              </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="formAppli">
-              <label>Выбрать пользователя</label>
-              <input type="text" name="user" />
-            </div>
-            <div className="formAppli">
-              <label>Количество бутылей</label>
-              <input type="text" name="product" />
-            </div>
-
-            <button className="btnModal_Appli">СОЗДАТЬ</button>
-          </form>
-          <div>asdasd</div>
+              <button className="btnModal_Appli">СОЗДАТЬ</button>
+            </form>
+            <div className="titleRoom">{titleRoom}</div>
+          </div>
         </Modal>
       </div>
     </div>

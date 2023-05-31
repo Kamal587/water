@@ -87,8 +87,7 @@ const Location = ({ modalActive, setModalActive }) => {
     setDatas(localDate);
     uuidv4();
     event.preventDefault();
-    console.log(event);
-    console.log(formData);
+
     formData.product &&
       dispatch(
         setLocal({

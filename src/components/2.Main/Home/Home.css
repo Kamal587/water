@@ -4,13 +4,13 @@
 
 .containerHome {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 10px;
 }
 
 .blog {
   max-width: 250px;
-  border: 5px solid green;
+  border: 3px solid black;
   border-radius: 30px;
   cursor: pointer;
 }
@@ -29,7 +29,6 @@
   line-height: 39px;
   border-radius: 25px;
   color: #000000;
-  background-color: aquamarine;
 }
 
 /*  */
@@ -50,7 +49,7 @@
 
 .blogShop {
   max-width: 250px;
-  border: 5px solid rgb(105, 116, 68);
+  border: 3px solid black;
   border-radius: 30px;
   margin: 10px 0px;
   cursor: pointer;
@@ -66,7 +65,6 @@
   line-height: 39px;
   border-radius: 25px;
   color: #000000;
-  background-color: rgb(124, 161, 158);
 }
 
 .shop {
@@ -75,7 +73,7 @@
 
 .blogSite {
   max-width: 250px;
-  border: 5px solid rgb(119, 77, 30);
+  border: 3px solid black;
   border-radius: 30px;
   margin: 10px 0px;
   cursor: pointer;
@@ -91,7 +89,6 @@
   line-height: 39px;
   border-radius: 25px;
   color: #000000;
-  background-color: rgb(173, 190, 123);
 }
 
 .site {
@@ -100,7 +97,7 @@
 
 .blogFloor {
   max-width: 250px;
-  border: 5px solid rgb(116, 68, 108);
+  border: 3px solid black;
   border-radius: 30px;
   margin: 10px 0px;
   cursor: pointer;
@@ -116,7 +113,6 @@
   line-height: 39px;
   border-radius: 25px;
   color: #000000;
-  background-color: rgb(223, 157, 223);
 }
 
 .floor {
@@ -125,7 +121,7 @@
 
 .blogRoom {
   max-width: 250px;
-  border: 5px solid rgb(71, 108, 150);
+  border: 3px solid black;
   border-radius: 30px;
   margin: 10px 0px;
   cursor: pointer;
@@ -141,7 +137,6 @@
   line-height: 39px;
   border-radius: 25px;
   color: #000000;
-  background-color: rgb(132, 181, 236);
 }
 
 .room {
@@ -197,4 +192,90 @@
 
 .btnAppli:hover {
   background: #0548b3;
+}
+
+.modalApp {
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.titleRoom {
+  border: 3px solid gray;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputModal {
+  border: none;
+  background-color: green;
+  border-bottom: 3px solid white;
+  margin-bottom: 40px;
+  color: white;
+  padding-left: 10px;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.25px;
+  line-height: 16px;
+}
+
+.titleAppli {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 29px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.formAppli label {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 29px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: #3f0a0a;
+}
+
+.btnInp {
+  margin-top: -40px;
+  margin-bottom: 40px;
+}
+
+.btnModal_Appli {
+  position: relative;
+  border: none;
+  outline: 3px solid teal;
+  font-weight: bold;
+  outline: none;
+  background: white;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  line-height: 16px;
+  margin-left: 10px;
+  margin-right: 8px;
+  min-width: 96px;
+  padding: 9px 23px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: teal;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btnModal_Appli:hover {
+  background-color: teal;
+  color: white;
 }

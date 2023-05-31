@@ -32,6 +32,21 @@ const slice = createSlice({
       });
     },
 
+    editWater(state, action) {
+      console.log(action.payload);
+      let waterID = action.payload.waterDate.waterId;
+      let valueWater = action.payload.waterDate.water;
+      let datestring = action.payload.waterDate.datestring;
+      let time = action.payload.waterDate.time;
+
+      state.location = state.location.map((trip) => {
+        if (trip.id === waterID) {
+          return { ...trip, water: valueWater, time, datestring };
+        }
+        return trip;
+      });
+    },
+
     removeLocal(state, action) {
       state.location = state.location.filter(
         (local) => local.id !== action.payload.tableProps
@@ -40,6 +55,6 @@ const slice = createSlice({
   },
 });
 
-export const { setLocal, removeLocal, editLocal } = slice.actions;
+export const { setLocal, removeLocal, editLocal, editWater } = slice.actions;
 
 export default slice.reducer;
