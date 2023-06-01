@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { useTable } from "react-table";
 
 const Application = () => {
-  const [formData, setFormData] = useState([]);
   const [datas, setDatas] = useState([]);
   const localDate = useSelector((state) => state.location.location);
+  const localDateAppli = localDate.filter((item) => item.datestring);
   const data = useMemo(() => datas, [datas]);
 
   useEffect(() => {
-    setDatas(localDate);
-  }, [formData]);
+    setDatas(localDateAppli);
+  }, []);
 
   const columns = React.useMemo(
     () => [

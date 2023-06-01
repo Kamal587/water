@@ -29,6 +29,10 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
     setAbc(tableProps);
   };
 
+  const editRow = (tableProps) => {
+    console.log(tableProps);
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -46,11 +50,16 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
         accessor: "id",
 
         Cell: (tableProps) => (
-          <img
-            src={del2}
-            className="delete"
-            onClick={() => deleteRow(tableProps.value)}
-          ></img>
+          <div className="control">
+            <div className="textEdit" onClick={() => editRow(tableProps)}>
+              EDIT
+            </div>
+            <img
+              src={del2}
+              className="delete"
+              onClick={() => deleteRow(tableProps.value)}
+            ></img>
+          </div>
         ),
       },
     ],

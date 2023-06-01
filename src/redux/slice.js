@@ -47,6 +47,22 @@ const slice = createSlice({
       });
     },
 
+    editPlace(state, action) {
+      let prod = action.payload.editArr.product;
+      let shop = action.payload.editArr.shop;
+      let site = action.payload.editArr.site;
+      let floor = action.payload.editArr.floor;
+      let room = action.payload.editArr.room;
+      let editID = action.payload.editArr.id;
+      state.location = state.location.map((trip) => {
+        if (trip.id === editID) {
+          return { product: prod, shop, site, floor, room };
+        }
+        return trip;
+      });
+      debugger;
+    },
+
     removeLocal(state, action) {
       state.location = state.location.filter(
         (local) => local.id !== action.payload.tableProps
@@ -55,6 +71,7 @@ const slice = createSlice({
   },
 });
 
-export const { setLocal, removeLocal, editLocal, editWater } = slice.actions;
+export const { setLocal, removeLocal, editLocal, editWater, editPlace } =
+  slice.actions;
 
 export default slice.reducer;

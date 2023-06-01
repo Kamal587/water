@@ -3,13 +3,15 @@ import "./Location.css";
 import { useTable } from "react-table";
 import Modal from "../../../Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { removeLocal, setLocal } from "../../../../redux/slice";
+import { editPlace, removeLocal, setLocal } from "../../../../redux/slice";
 import del2 from "./../../../../assets/del2.png";
 import { v4 as uuidv4 } from "uuid";
 
 const Location = ({ modalActive, setModalActive }) => {
   const dispatch = useDispatch();
-
+  const [edit, setEdit] = useState(false);
+  const [editID, setEditID] = useState();
+  const [editArr, setEditArr] = useState();
   const [datas, setDatas] = useState([]);
   const [abc, setAbc] = useState(0);
 
@@ -22,7 +24,27 @@ const Location = ({ modalActive, setModalActive }) => {
   }, [formData, abc]);
 
   const editRow = (tableProps) => {
-    console.log(tableProps);
+    setEditID(tableProps);
+
+    setEditArr(datas.filter((item) => item.id === editID)[0]);
+
+    // setEdit(true);
+  };
+
+  console.log(editArr);
+
+  const handleSubmitEdit = (event) => {
+    event.preventDefault();
+
+    console.log("submit");
+
+    dispatch(editPlace({ editArr }));
+  };
+
+  const handleChangeEdit = (event) => {
+    const { name, value } = event.target;
+    setEditArr((values) => ({ ...values, [name]: value }));
+    console.log("change");
   };
 
   const deleteRow = (tableProps) => {
@@ -61,7 +83,7 @@ const Location = ({ modalActive, setModalActive }) => {
 
         Cell: (tableProps) => (
           <div className="control">
-            <div className="textEdit" onClick={() => editRow(tableProps)}>
+            <div className="textEdit" onClick={() => editRow(tableProps.value)}>
               EDIT
             </div>
             <img
@@ -180,16 +202,16 @@ const Location = ({ modalActive, setModalActive }) => {
         </form>
       </Modal>
 
-      <Modal modalActive={modalActive} setModalActive={setModalActive}>
-        <div className="titleModal">СОЗДАТЬ МЕСТОПОЛОЖЕНИЕ</div>
-        <form onSubmit={handleSubmit}>
+      <Modal modalActive={edit} setModalActive={setEdit}>
+        <div className="titleModal">ИЗМЕНИТЬ МЕСТОПОЛОЖЕНИЕ</div>
+        <form onSubmit={handleSubmitEdit}>
           <div className="formsBlog">
             <label>ID</label>
             <input
               type="text"
               name="id"
-              value={uuidv4()}
-              onChange={handleChange}
+              value={editID}
+              onChange={handleChangeEdit}
             />
           </div>
           <div className="formsBlog">
@@ -197,8 +219,8 @@ const Location = ({ modalActive, setModalActive }) => {
             <input
               type="text"
               name="product"
-              value={formData.product}
-              onChange={handleChange}
+              value={editArr && editArr.product}
+              onChange={handleChangeEdit}
             />
           </div>
           <div className="formsBlog">
@@ -206,8 +228,8 @@ const Location = ({ modalActive, setModalActive }) => {
             <input
               type="text"
               name="shop"
-              value={formData.shop}
-              onChange={handleChange}
+              value={editArr && editArr.shop}
+              onChange={handleChangeEdit}
             />
           </div>
           <div className="formsBlog">
@@ -215,8 +237,8 @@ const Location = ({ modalActive, setModalActive }) => {
             <input
               type="text"
               name="site"
-              value={formData.site}
-              onChange={handleChange}
+              value={editArr && editArr.site}
+              onChange={handleChangeEdit}
             />
           </div>
 
@@ -225,8 +247,8 @@ const Location = ({ modalActive, setModalActive }) => {
             <input
               type="text"
               name="floor"
-              value={formData.floor}
-              onChange={handleChange}
+              value={editArr && editArr.floor}
+              onChange={handleChangeEdit}
             />
           </div>
 
@@ -235,8 +257,8 @@ const Location = ({ modalActive, setModalActive }) => {
             <input
               type="text"
               name="room"
-              value={formData.room}
-              onChange={handleChange}
+              value={editArr && editArr.room}
+              onChange={handleChangeEdit}
             />
           </div>
 
