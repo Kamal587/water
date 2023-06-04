@@ -21,17 +21,24 @@ const Location = ({ modalActive, setModalActive }) => {
   const { v4: uuidv4 } = require("uuid");
   useEffect(() => {
     setDatas(localDate);
-  }, [formData, abc]);
+  }, [formData, abc, localDate]);
 
-  const editRow = (tableProps) => {
+
+
+
+
+  // EDIT
+  const editRow = (tableProps, e) => {
+    e.preventDefault();
+    setAbc(+abc + 1);
     setEditID(tableProps);
 
     setEditArr(datas.filter((item) => item.id === editID)[0]);
-
-    // setEdit(true);
+    console.log(datas);
+    editArr && setEdit(true);
   };
 
-  console.log(editArr);
+// 
 
   const handleSubmitEdit = (event) => {
     event.preventDefault();
@@ -83,7 +90,10 @@ const Location = ({ modalActive, setModalActive }) => {
 
         Cell: (tableProps) => (
           <div className="control">
-            <div className="textEdit" onClick={() => editRow(tableProps.value)}>
+            <div
+              className="textEdit"
+              onClick={(e) => editRow(e, tableProps.value)}
+            >
               EDIT
             </div>
             <img

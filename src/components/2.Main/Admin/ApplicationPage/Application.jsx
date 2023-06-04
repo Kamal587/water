@@ -5,9 +5,9 @@ import { useTable } from "react-table";
 const Application = () => {
   const [datas, setDatas] = useState([]);
   const localDate = useSelector((state) => state.location.location);
-  const localDateAppli = localDate.filter((item) => item.datestring);
+  const localDateAppli = localDate.filter((item) => item.water);
   const data = useMemo(() => datas, [datas]);
-
+  console.log(localDateAppli);
   useEffect(() => {
     setDatas(localDateAppli);
   }, []);
