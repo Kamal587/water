@@ -42,7 +42,7 @@ const Home = () => {
     setBlogID(id);
     setProductBlog(false);
   };
-
+  console.log(workArr);
   const checkBlogProduct = (id) => {
     if (workArr.shop) {
       setBlogShop(false);
@@ -227,7 +227,7 @@ const Home = () => {
   };
 
   const hasModalWayOn = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let d = new Date();
 
     let datestring =
@@ -236,8 +236,8 @@ const Home = () => {
     const waterDate = {
       water: valueAppli,
       waterId: blogID,
-      datestring, 
-      time
+      datestring,
+      time,
     };
     dispatch(
       editWater({
@@ -270,7 +270,13 @@ const Home = () => {
     setBlogSite(true);
 
     setProductBlog(true);
-
+  };
+  const hasModalWayOFFStop = () => {
+    console.log("aaa");
+    setModalWay(false);
+  };
+  const hasModalWayOnSTOP = () => {
+    setModalWay(false);
   };
 
   const changeInput = (event) => setValueAppli(event.target.value);
@@ -419,7 +425,9 @@ const Home = () => {
               <button className="btnOn" onClick={hasModalWayOn}>
                 Взять
               </button>
-              <button className="btnOFF">Отмена</button>
+              <button className="btnOFF" onClick={hasModalWayOnSTOP}>
+                Отмена
+              </button>
             </div>
           </div>
         </Modal>
@@ -443,7 +451,9 @@ const Home = () => {
               <button className="btnOn" onClick={hasModalWayOFF}>
                 Завершить
               </button>
-              <button className="btnOFF">Отмена</button>
+              <button className="btnOFF" onClick={hasModalWayOFFStop}>
+                Отмена
+              </button>
             </div>
           </div>
         </Modal>
@@ -454,7 +464,12 @@ const Home = () => {
             <form onSubmit={handleSubmit}>
               <div className="formAppli">
                 <label>Выбрать пользователя</label>
-                <input type="text" name="user" className="inputModal" />
+                <input
+                  type="text"
+                  name="user"
+                  className="inputModal"
+                  value={workArr && workArr.name}
+                />
               </div>
               <div className="formAppli">
                 <label>Количество бутылей</label>
