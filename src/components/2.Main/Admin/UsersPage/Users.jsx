@@ -3,13 +3,20 @@ import "./Users.css";
 import { useTable } from "react-table";
 import Modal from "../../../Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { editLocal, removeLocal, setLocal } from "../../../../redux/slice";
+import {
+  editLocal,
+  editUser,
+  removeLocal,
+  setLocal,
+} from "../../../../redux/slice";
 import del2 from "./../../../../assets/del2.png";
 import { v4 as uuidv4 } from "uuid";
 
 const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
   const dispatch = useDispatch();
-
+  const [edit, setEdit] = useState(false);
+  const [editID, setEditID] = useState();
+  const [editArr, setEditArr] = useState([]);
   const [datas, setDatas] = useState([]);
   const [dis, setDis] = useState(true);
   const [optionId, setOptionId] = useState(0);
@@ -24,13 +31,29 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
   }, [abc, nameDate]);
 
   const deleteRow = (tableProps) => {
-    console.log(tableProps);
+ 
     dispatch(removeLocal({ tableProps }));
     setAbc(tableProps);
   };
 
   const editRow = (tableProps) => {
-    console.log(tableProps);
+    setEdit(true);
+   
+    setEditArr(localDate?.filter((item) => item.id === tableProps)[0]);
+  };
+
+  const handleSubmitEdit = (event) => {
+    event.preventDefault();
+
+    dispatch(editUser({ editArr }));
+    setEdit(false);
+  };
+
+  const handleChangeEdit = (event) => {
+    const { name, value } = event.target;
+
+    setEditArr((values) => ({ ...values, [name]: value }));
+    
   };
 
   const columns = React.useMemo(
@@ -51,7 +74,7 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
 
         Cell: (tableProps) => (
           <div className="control">
-            <div className="textEdit" onClick={() => editRow(tableProps)}>
+            <div className="textEdit" onClick={() => editRow(tableProps.value)}>
               EDIT
             </div>
             <img
@@ -143,6 +166,24 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
           <button className="btnModal" disabled={dis}>
             СОЗДАТЬ
           </button>
+        </form>
+      </Modal>
+
+      <Modal modalActive={edit} setModalActive={setEdit}>
+        <div className="titleModal">ИЗМЕНИТЬ ПОЛЬЗОВАТЕЛЯ</div>
+        <form onSubmit={handleSubmitEdit}>
+          <div className="formsBlog">
+            <label>ФИО</label>
+            <input
+              placeholder="фамилия, инициалы"
+              type="text"
+              name="name"
+              value={editArr && editArr.name}
+              onChange={handleChangeEdit}
+            />
+          </div>
+
+          <button className="btnModal">СОЗДАТЬ</button>
         </form>
       </Modal>
       <div className="titlePage">УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</div>

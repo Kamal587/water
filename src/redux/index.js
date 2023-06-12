@@ -10,10 +10,13 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
 import sliceReducer from "./slice";
+import sliceApplyReducer from "./sliceApply";
 
 const rootReducer = combineReducers({
   location: sliceReducer,
+  apply: sliceApplyReducer,
 });
 
 const persistConfig = {

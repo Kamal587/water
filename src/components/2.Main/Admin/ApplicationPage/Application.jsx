@@ -4,10 +4,10 @@ import { useTable } from "react-table";
 
 const Application = () => {
   const [datas, setDatas] = useState([]);
-  const localDate = useSelector((state) => state.location.location);
-  const localDateAppli = localDate.filter((item) => item.water);
+  const apply = useSelector((state) => state.apply.apply);
+  const localDateAppli = apply.filter((item) => item.water);
   const data = useMemo(() => datas, [datas]);
-  console.log(localDateAppli);
+
   useEffect(() => {
     setDatas(localDateAppli);
   }, []);
@@ -41,22 +41,9 @@ const Application = () => {
       {
         Header: "ДАТА",
         accessor: "datestring",
-
-        // Cell: (tableProps) => (
-        //   <div className="control">
-        //     <div className="textEdit" onClick={() => editRow(tableProps)}>
-        //       EDIT
-        //     </div>
-        //     <img
-        //       src={del2}
-        //       className="delete"
-        //       onClick={() => deleteRow(tableProps.value)}
-        //     ></img>
-        //   </div>
-        // ),
       },
       {
-        Header: "ВРЕМЯ РЕАГИРОВАНИЯ",
+        Header: "ВРЕМЯ РЕАГИРОВАНИЯ  (минуты)",
         accessor: "time",
       },
       {

@@ -11,7 +11,7 @@ const Location = ({ modalActive, setModalActive }) => {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
   const [editID, setEditID] = useState();
-  const [editArr, setEditArr] = useState();
+  const [editArr, setEditArr] = useState([]);
   const [datas, setDatas] = useState([]);
   const [abc, setAbc] = useState(0);
 
@@ -23,35 +23,35 @@ const Location = ({ modalActive, setModalActive }) => {
     setDatas(localDate);
   }, [formData, abc, localDate]);
 
-
-
-
-
   // EDIT
-  const editRow = (tableProps, e) => {
-    e.preventDefault();
+  const editRow = (tableProps) => {
+    console.log(localDate);
+    setEdit(true);
+    let check = localDate.filter((item) => item.id === tableProps);
+    console.log(check);
+    setEditArr(localDate?.filter((item) => item.id === tableProps)[0]);
     setAbc(+abc + 1);
     setEditID(tableProps);
 
-    setEditArr(datas.filter((item) => item.id === editID)[0]);
-    console.log(datas);
-    editArr && setEdit(true);
+    console.log(editArr);
   };
 
-// 
+  //
 
   const handleSubmitEdit = (event) => {
     event.preventDefault();
 
     console.log("submit");
-
+    console.log(editArr);
     dispatch(editPlace({ editArr }));
+    setEdit(false);
   };
 
   const handleChangeEdit = (event) => {
     const { name, value } = event.target;
+
     setEditArr((values) => ({ ...values, [name]: value }));
-    console.log("change");
+
   };
 
   const deleteRow = (tableProps) => {
@@ -92,7 +92,7 @@ const Location = ({ modalActive, setModalActive }) => {
           <div className="control">
             <div
               className="textEdit"
-              onClick={(e) => editRow(e, tableProps.value)}
+              onClick={(e) => editRow(tableProps.value)}
             >
               EDIT
             </div>

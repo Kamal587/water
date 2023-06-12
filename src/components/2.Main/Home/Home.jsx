@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editWater } from "../../../redux/slice";
+import { editTime, editWater } from "../../../redux/sliceApply";
 import Modal from "../../Modal/Modal";
 import arrow from "./../../../assets/Arrow.png";
 import moment from "moment";
@@ -32,17 +32,21 @@ const Home = () => {
   const [shopWay, setShopWay] = useState();
   const [floorWay, setFloorWay] = useState();
   const [roomWay, setRoomWay] = useState();
+  const [timeDiff, setTimeDiff] = useState();
   //
   const data = useSelector((state) => state.location.location);
+  const dataApply = useSelector((state) => state.apply.apply);
+  console.log(dataApply);
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
+  const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
   const dispatch = useDispatch();
   useEffect(() => {}, [blogID]);
-  console.log(workArr);
+  console.log(applyArr);
   const checkBlog = (id) => {
     setBlogID(id);
     setProductBlog(false);
   };
-  console.log(workArr);
+
   const checkBlogProduct = (id) => {
     if (workArr.shop) {
       setBlogShop(false);
@@ -79,6 +83,18 @@ const Home = () => {
       !workArr.shop &&
       !workArr.site &&
       workArr.floor &&
+      !workArr.room
+    ) {
+      setTitleRoom(workArr.floor);
+      setProdWay(workArr.product);
+      setFloorWay(workArr.floor);
+      setModalActive(true);
+    }
+    if (
+      workArr.product &&
+      !workArr.shop &&
+      !workArr.site &&
+      !workArr.floor &&
       !workArr.room
     ) {
       setTitleRoom(workArr.floor);
@@ -176,24 +192,7 @@ const Home = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setWayOf(true);
-    // let d = new Date();
 
-    // let datestring =
-    //   d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
-    // let time = d.getHours() + ":" + d.getMinutes();
-
-    // const waterDate = {
-    //   water: valueAppli,
-    //   waterId: blogID,
-    //   datestring,
-    //   time,
-    // };
-    // dispatch(
-    //   editWater({
-    //     waterDate,
-    //   })
-    // );
-    // setValueAppli(0);
     setModalActive(false);
   };
 
@@ -222,22 +221,57 @@ const Home = () => {
   };
 
   const hasWayClickEnd = () => {
-    console.log("asd");
+    let dataNow = new Date();
+    let dateSTR = applyArr.time;
+
+    let timeBegin = new Date(
+      dateSTR[0],
+      dateSTR[1] - 1,
+      dateSTR[2],
+      dateSTR[3],
+      dateSTR[4],
+      1
+    );
+    console.log(timeBegin);
+    let diffTime = dataNow.getTime() - timeBegin.getTime();
+    let time = Math.ceil(diffTime / (1000 * 60));
+    setTimeDiff(time);
+    const timeDate = {
+      waterId: blogID,
+
+      time,
+    };
+    dispatch(
+      editTime({
+        timeDate,
+      })
+    );
     setModalWayEnd(true);
   };
 
   const hasModalWayOn = (e) => {
-    e.preventDefault();
     let d = new Date();
 
+    let timeBegine = [
+      d.getFullYear(),
+      d.getMonth() + 1,
+      d.getDate(),
+      d.getHours(),
+      d.getMinutes(),
+    ];
     let datestring =
       d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
-    let time = d.getHours() + ":" + d.getMinutes();
+
     const waterDate = {
+      product: workArr.product,
+      room: workArr.room,
+      floor: workArr.floor,
+      site: workArr.site,
+      shop: workArr.shop,
       water: valueAppli,
       waterId: blogID,
       datestring,
-      time,
+      time: timeBegine,
     };
     dispatch(
       editWater({
@@ -272,8 +306,7 @@ const Home = () => {
     setProductBlog(true);
   };
   const hasModalWayOFFStop = () => {
-    console.log("aaa");
-    setModalWay(false);
+    setModalWayEnd(false);
   };
   const hasModalWayOnSTOP = () => {
     setModalWay(false);
@@ -446,7 +479,7 @@ const Home = () => {
               {roomWay && <img src={arrow} alt="" className="arrow" />}{" "}
               {roomWay})
             </div>
-            <div className="time">Время:</div>
+            <div className="time">Время: {timeDiff} мин</div>
             <div className="btns">
               <button className="btnOn" onClick={hasModalWayOFF}>
                 Завершить
