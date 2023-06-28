@@ -33,14 +33,16 @@ const Home = () => {
   const [floorWay, setFloorWay] = useState();
   const [roomWay, setRoomWay] = useState();
   const [timeDiff, setTimeDiff] = useState();
+  const [timeStr, setTimeStr] = useState([]);
   //
   const data = useSelector((state) => state.location.location);
   const dataApply = useSelector((state) => state.apply.apply);
-  console.log(dataApply);
+
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
   const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
+
   const dispatch = useDispatch();
-  useEffect(() => {}, [blogID]);
+  useEffect(() => {}, [blogID, applyArr]);
   console.log(applyArr);
   const checkBlog = (id) => {
     setBlogID(id);
@@ -219,11 +221,11 @@ const Home = () => {
   const hasWayClick = () => {
     setModalWay(true);
   };
-
+  console.log(timeStr);
   const hasWayClickEnd = () => {
     let dataNow = new Date();
-    let dateSTR = applyArr.time;
-
+    let dateSTR = timeStr;
+    console.log(applyArr);
     let timeBegin = new Date(
       dateSTR[0],
       dateSTR[1] - 1,
@@ -232,9 +234,12 @@ const Home = () => {
       dateSTR[4],
       1
     );
+    console.log(applyArr);
     console.log(timeBegin);
     let diffTime = dataNow.getTime() - timeBegin.getTime();
+    console.log(diffTime);
     let time = Math.ceil(diffTime / (1000 * 60));
+    console.log(time);
     setTimeDiff(time);
     const timeDate = {
       waterId: blogID,
@@ -259,9 +264,11 @@ const Home = () => {
       d.getHours(),
       d.getMinutes(),
     ];
+    let strTimeBegin = timeBegine.join();
+  
     let datestring =
       d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
-
+    setTimeStr(timeBegine);
     const waterDate = {
       product: workArr.product,
       room: workArr.room,
@@ -271,7 +278,7 @@ const Home = () => {
       water: valueAppli,
       waterId: blogID,
       datestring,
-      time: timeBegine,
+      time: strTimeBegin,
     };
     dispatch(
       editWater({
