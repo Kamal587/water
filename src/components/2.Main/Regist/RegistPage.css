@@ -1,0 +1,52 @@
+.wrapReg {
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0px auto;
+  padding-top: 20px;
+}
+
+.form label {
+  text-align: left;
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.titleRegist {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 26px;
+}
+
+.form input {
+  border: 3px solid teal;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: 30px;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btnReg {
+  width: 150px;
+  margin: 0px auto;
+  padding: 10px 20px;
+  border: 3px solid teal;
+  border-radius: 10px;
+  font-family: "Montserrat";
+}
+.btnReg:hover {
+  background-color: rgb(2, 77, 77);
+  color: white;
+  cursor: pointer;
+}

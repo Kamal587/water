@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Application from "./Admin/ApplicationPage/Application";
 import Location from "./Admin/LocationPage/Location";
 import Users from "./Admin/UsersPage/Users";
+import RegistPage from "./Regist/RegistPage";
 
 const RouterPage = ({ modalActive, setModalActive }) => {
   const localDate = useSelector((state) => state.location.location);
@@ -29,6 +30,7 @@ const RouterPage = ({ modalActive, setModalActive }) => {
         }
       />
       <Route path="/application" element={<Application />} />
+      <Route path="/regist" element={<RegistPage />} />
     </Routes>
   );
 };

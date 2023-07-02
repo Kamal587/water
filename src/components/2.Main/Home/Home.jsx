@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { editTime, editWater } from "../../../redux/sliceApply";
 import Modal from "../../Modal/Modal";
 import arrow from "./../../../assets/Arrow.png";
-import moment from "moment";
-import "./Home.css";
 
-const Home = () => {
+import "./Home.css";
+import { editObj } from "../../../redux/obj";
+
+const Home = ({ wayOfEnd, setWayOfEnd }) => {
   const [productBlog, setProductBlog] = useState(true);
   const [blogID, setBlogID] = useState();
   const [blogShop, setBlogShop] = useState(true);
@@ -21,11 +22,11 @@ const Home = () => {
   const [timeEnd, setTimeEnd] = useState([]);
 
   // END TIME
-
+  const [checkObj, setCheckObj] = useState([]);
   // ПУТЬ
   const [modalWayEnd, setModalWayEnd] = useState(false);
   const [modalWay, setModalWay] = useState(false);
-  const [wayOfEnd, setWayOfEnd] = useState(false);
+
   const [wayOf, setWayOf] = useState(false);
   const [prodWay, setProdWay] = useState();
   const [siteWay, setSiteWay] = useState();
@@ -37,13 +38,14 @@ const Home = () => {
   //
   const data = useSelector((state) => state.location.location);
   const dataApply = useSelector((state) => state.apply.apply);
+  const dataObj = useSelector((state) => state.obj.obj);
 
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
   const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
 
   const dispatch = useDispatch();
   useEffect(() => {}, [blogID, applyArr]);
-  console.log(applyArr);
+
   const checkBlog = (id) => {
     setBlogID(id);
     setProductBlog(false);
@@ -221,11 +223,11 @@ const Home = () => {
   const hasWayClick = () => {
     setModalWay(true);
   };
-  console.log(timeStr);
-  const hasWayClickEnd = () => {
+
+  const hasWayClickEnd = (e) => {
     let dataNow = new Date();
     let dateSTR = timeStr;
-    console.log(applyArr);
+
     let timeBegin = new Date(
       dateSTR[0],
       dateSTR[1] - 1,
@@ -234,13 +236,13 @@ const Home = () => {
       dateSTR[4],
       1
     );
-    console.log(applyArr);
-    console.log(timeBegin);
+
     let diffTime = dataNow.getTime() - timeBegin.getTime();
-    console.log(diffTime);
+
     let time = Math.ceil(diffTime / (1000 * 60));
-    console.log(time);
+
     setTimeDiff(time);
+
     const timeDate = {
       waterId: blogID,
 
@@ -255,6 +257,20 @@ const Home = () => {
   };
 
   const hasModalWayOn = (e) => {
+    // const obj = {
+    //   product: prodWay,
+    //   room: roomWay,
+    //   floor: floorWay,
+    //   site: siteWay,
+    //   shop: shopWay,
+    //   id: blogID,
+    // };
+    // dispatch(
+    //   editObj({
+    //     obj,
+    //   })
+    // );
+
     let d = new Date();
 
     let timeBegine = [
@@ -265,7 +281,7 @@ const Home = () => {
       d.getMinutes(),
     ];
     let strTimeBegin = timeBegine.join();
-  
+
     let datestring =
       d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
     setTimeStr(timeBegine);
@@ -280,12 +296,13 @@ const Home = () => {
       datestring,
       time: strTimeBegin,
     };
+    console.log(waterDate);
     dispatch(
       editWater({
         waterDate,
       })
     );
-    console.log(waterDate);
+
     setValueAppli(0);
     // let d = new Date();
     // let starts = moment(d);
@@ -312,6 +329,7 @@ const Home = () => {
 
     setProductBlog(true);
   };
+
   const hasModalWayOFFStop = () => {
     setModalWayEnd(false);
   };
@@ -323,16 +341,79 @@ const Home = () => {
 
   return (
     <div className="wrapperHome">
-      <div className={productBlog ? "mainHead" : "mainHeadOff"}>
-        <div className="containerHome">
-          {data.map((item) => (
-            <div className="blog" onClick={() => checkBlog(item.id)}>
-              <div className="textBlog">ПРОИЗВОДСТВО</div>
-              <div className="prod">{item.product}</div>
-            </div>
-          ))}
+      <div className="cont">
+        <div className={productBlog ? "mainHead" : "mainHeadOff"}>
+          <div className="containerHome">
+            {data.map((item) => (
+              <div className="blog" onClick={() => checkBlog(item.id)}>
+                <div className="textBlog">ПРОИЗВОДСТВО</div>
+                <div className="prod">{item.product}</div>
+              </div>
+            ))}
+          </div>
         </div>
+        {/* {dataObj &&
+          dataObj.map((item) => (
+            <div className={wayOfEnd ? "way" : "wayOff"}>
+              <div>
+                {item.room ||
+                  item.floor ||
+                  item.site ||
+                  item.shop ||
+                  item.product}{" "}
+                ({item.product}
+                <img src={arrow} alt="" className="arrow" />
+                {item.shop && <span>цех</span>} {item.shop}{" "}
+                {item.site && <img src={arrow} alt="" className="arrow" />}
+                {item.site && <span>участок</span>} {item.site}{" "}
+                {item.floor && <img src={arrow} alt="" className="arrow" />}{" "}
+                {item.floor && <span>этаж</span>} {item.floor}{" "}
+                {item.room && <img src={arrow} alt="" className="arrow" />}{" "}
+                {item.room})
+              </div>
+              <div className="textWay">
+                <span className="textWayRed">Работает:</span>
+                <button
+                  className="btnWayEnd"
+                  onClick={(e) => hasWayClickEnd(setCheckObj(item))}
+                >
+                  Завершить
+                </button>
+              </div>
+            </div>
+          ))} */}
       </div>
+      <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
+        <div className="modalWay">
+          <div className="titleWay">ЗАЯВКА</div>
+          <div className="textModalWay">
+            {checkObj.room ||
+              checkObj.floor ||
+              checkObj.site ||
+              checkObj.shop ||
+              checkObj.product}{" "}
+            ({checkObj.product}
+            <img src={arrow} alt="" className="arrow" />
+            {checkObj.shop && <span>цех</span>} {shopWay}{" "}
+            {checkObj.site && <img src={arrow} alt="" className="arrow" />}
+            {checkObj.site && <span>участок</span>} {checkObj.site}{" "}
+            {checkObj.floor && <img src={arrow} alt="" className="arrow" />}{" "}
+            {checkObj.floor && <span>этаж</span>} {checkObj.floor}{" "}
+            {checkObj.room && <img src={arrow} alt="" className="arrow" />}{" "}
+            {checkObj.room})
+          </div>
+          <div className="time">Время: {timeDiff} мин</div>
+          <div className="btns">
+            <button className="btnOn" onClick={hasModalWayOFF}>
+              Завершить
+            </button>
+            <button className="btnOFF" onClick={hasModalWayOFFStop}>
+              Отмена
+            </button>
+          </div>
+        </div>
+      </Modal>
+
       <div className={productBlog ? "productOff" : "productOn"}>
         <div>
           <div>

@@ -21,7 +21,6 @@ const sliceApply = createSlice({
         datestring: action.payload.waterDate.datestring,
         water: action.payload.waterDate.water,
       });
-      debugger;
     },
 
     editTime(state, action) {
