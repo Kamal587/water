@@ -31,14 +31,13 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
   }, [abc, nameDate]);
 
   const deleteRow = (tableProps) => {
- 
     dispatch(removeLocal({ tableProps }));
     setAbc(tableProps);
   };
 
   const editRow = (tableProps) => {
     setEdit(true);
-   
+
     setEditArr(localDate?.filter((item) => item.id === tableProps)[0]);
   };
 
@@ -53,7 +52,6 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
     const { name, value } = event.target;
 
     setEditArr((values) => ({ ...values, [name]: value }));
-    
   };
 
   const columns = React.useMemo(
@@ -66,6 +64,10 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
       {
         Header: "ФИО РАБОТНИКА",
         accessor: "name",
+      },
+      {
+        Header: "МЕСТОПОЛОЖЕНИЕ",
+        accessor: "product",
       },
 
       {

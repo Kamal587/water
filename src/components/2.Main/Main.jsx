@@ -6,15 +6,49 @@ import Admin from "./Admin/Admin";
 import "./Main.css";
 import RegistPage from "./Regist/RegistPage";
 
-const Main = () => {
+const Main = ({
+  prodWay,
+  setProdWay,
+  floorWay,
+  setFloorWay,
+  siteWay,
+  setSiteWay,
+  shopWay,
+  setShopWay,
+  roomWay,
+  setRoomWay,
+  timeDiff,
+  setTimeDiff,
+  timeStr,
+  setTimeStr,
+}) => {
   const [wayOfEnd, setWayOfEnd] = useState(false);
-  console.log(wayOfEnd);
+
   return (
     <div className="main">
       <Routes>
         <Route
           path="/"
-          element={<Home wayOfEnd={wayOfEnd} setWayOfEnd={setWayOfEnd} />}
+          element={
+            <Home
+              prodWay={prodWay}
+              setProdWay={setProdWay}
+              floorWay={floorWay}
+              setFloorWay={setFloorWay}
+              siteWay={siteWay}
+              setSiteWay={setSiteWay}
+              shopWay={shopWay}
+              setShopWay={setShopWay}
+              roomWay={roomWay}
+              setRoomWay={setRoomWay}
+              wayOfEnd={wayOfEnd}
+              setWayOfEnd={setWayOfEnd}
+              timeDiff={timeDiff}
+              setTimeDiff={setTimeDiff}
+              timeStr={timeStr}
+              setTimeStr={setTimeStr}
+            />
+          }
         />
         <Route path="/admin" element={<Navigate to="/admin/place" />}>
           {/* <Route index element={<Admin />} />

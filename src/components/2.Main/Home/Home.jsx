@@ -5,9 +5,28 @@ import Modal from "../../Modal/Modal";
 import arrow from "./../../../assets/Arrow.png";
 
 import "./Home.css";
+
+import { useNavigate } from "react-router-dom";
 import { editObj } from "../../../redux/obj";
 
-const Home = ({ wayOfEnd, setWayOfEnd }) => {
+const Home = ({
+  wayOfEnd,
+  setWayOfEnd,
+  prodWay,
+  setProdWay,
+  floorWay,
+  setFloorWay,
+  siteWay,
+  setSiteWay,
+  shopWay,
+  setShopWay,
+  roomWay,
+  setRoomWay,
+  timeDiff,
+  setTimeDiff,
+  timeStr,
+  setTimeStr,
+}) => {
   const [productBlog, setProductBlog] = useState(true);
   const [blogID, setBlogID] = useState();
   const [blogShop, setBlogShop] = useState(true);
@@ -28,13 +47,7 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
   const [modalWay, setModalWay] = useState(false);
 
   const [wayOf, setWayOf] = useState(false);
-  const [prodWay, setProdWay] = useState();
-  const [siteWay, setSiteWay] = useState();
-  const [shopWay, setShopWay] = useState();
-  const [floorWay, setFloorWay] = useState();
-  const [roomWay, setRoomWay] = useState();
-  const [timeDiff, setTimeDiff] = useState();
-  const [timeStr, setTimeStr] = useState([]);
+
   //
   const data = useSelector((state) => state.location.location);
   const dataApply = useSelector((state) => state.apply.apply);
@@ -48,6 +61,16 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
 
   const checkBlog = (id) => {
     setBlogID(id);
+    setBlogFloor(true);
+    setBlogRoom(true);
+    setBlogShop(true);
+    setBlogSite(true);
+    setProdWay();
+    setFloorWay();
+    setRoomWay();
+    setShopWay();
+    setSiteWay();
+    setWayOfEnd(false);
     setProductBlog(false);
   };
 
@@ -97,13 +120,19 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
     if (
       workArr.product &&
       !workArr.shop &&
+      workArr.site &&
+      !workArr.floor &&
+      !workArr.room
+    ) {
+      setModalActive(true);
+    }
+    if (
+      workArr.product &&
+      !workArr.shop &&
       !workArr.site &&
       !workArr.floor &&
       !workArr.room
     ) {
-      setTitleRoom(workArr.floor);
-      setProdWay(workArr.product);
-      setFloorWay(workArr.floor);
       setModalActive(true);
     }
   };
@@ -137,6 +166,10 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
       setTitleRoom(workArr.floor);
       setModalActive(true);
     }
+    if (!workArr.site && !workArr.floor && !workArr.room) {
+      setBlogFloor(false);
+      setModalActive(true);
+    }
   };
   const checkBlogSite = () => {
     if (workArr.floor) {
@@ -152,6 +185,9 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
     if (workArr.floor && !workArr.room) {
       setFloorWay(workArr.floor);
       setTitleRoom(workArr.floor);
+      setModalActive(true);
+    }
+    if (!workArr.floor && !workArr.room) {
       setModalActive(true);
     }
   };
@@ -195,8 +231,24 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setWayOf(true);
 
+    const objWind = {
+      product: prodWay,
+      room: roomWay,
+      floor: floorWay,
+      site: siteWay,
+      shop: shopWay,
+      id: blogID,
+    };
+
+    dispatch(
+      editObj({
+        objWind,
+      })
+    );
+
+    setWayOf(true);
+    setProductBlog(true);
     setModalActive(false);
   };
 
@@ -286,7 +338,7 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
       d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
     setTimeStr(timeBegine);
     const waterDate = {
-      product: workArr.product,
+      product: workArr && workArr.product,
       room: workArr.room,
       floor: workArr.floor,
       site: workArr.site,
@@ -296,19 +348,19 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
       datestring,
       time: strTimeBegin,
     };
-    console.log(waterDate);
-    dispatch(
-      editWater({
-        waterDate,
-      })
-    );
+
+    waterDate.product &&
+      dispatch(
+        editWater({
+          waterDate,
+        })
+      );
 
     setValueAppli(0);
     // let d = new Date();
     // let starts = moment(d);
     // let ends = moment();
 
-    // console.log(starts);
     setModalWay(false);
     setWayOf(false);
     setWayOfEnd(true);
@@ -343,14 +395,124 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
     <div className="wrapperHome">
       <div className="cont">
         <div className={productBlog ? "mainHead" : "mainHeadOff"}>
-          <div className="containerHome">
-            {data.map((item) => (
-              <div className="blog" onClick={() => checkBlog(item.id)}>
-                <div className="textBlog">ПРОИЗВОДСТВО</div>
-                <div className="prod">{item.product}</div>
-              </div>
-            ))}
+          <div>
+            <div className="containerHome">
+              {data.map((item) => (
+                <div className="blog" onClick={() => checkBlog(item.id)}>
+                  <div className="textBlog">ПРОИЗВОДСТВО</div>
+                  <div className="prod">{item.product}</div>
+                </div>
+              ))}
+            </div>
           </div>
+          <div className={wayOf ? "way" : "wayOff"}>
+            <div>
+              {roomWay || floorWay || siteWay || shopWay || prodWay} ({prodWay}
+              <img src={arrow} alt="" className="arrow" />
+              {shopWay && <span>цех</span>} {shopWay}{" "}
+              {siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
+              {!siteWay && floorWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
+              {siteWay && <span>участок</span>} {siteWay}{" "}
+              {floorWay && siteWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {floorWay && <span>этаж</span>} {floorWay}{" "}
+              {roomWay && floorWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && siteWay && !shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && !siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay})
+            </div>
+            <button className="btnWay" onClick={hasWayClick}>
+              Взять
+            </button>
+          </div>
+
+          <div className={wayOfEnd ? "way" : "wayOff"}>
+            <div>
+              {roomWay || floorWay || siteWay || shopWay || prodWay} ({prodWay}
+              <img src={arrow} alt="" className="arrow" />
+              {shopWay && <span>цех</span>} {shopWay}{" "}
+              {siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
+              {!siteWay && floorWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
+              {siteWay && <span>участок</span>} {siteWay}{" "}
+              {floorWay && siteWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {floorWay && <span>этаж</span>} {floorWay}{" "}
+              {roomWay && floorWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && siteWay && !shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && !siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay})
+            </div>
+            <div className="textWay">
+              <span className="textWayRed">
+                Работает: <span className="workText">{prodWay}</span>
+              </span>
+              <button className="btnWayEnd" onClick={hasWayClickEnd}>
+                Завершить
+              </button>
+            </div>
+          </div>
+          <Modal modalActive={modalWay} setModalActive={setModalWay}>
+            <div className="modalWay">
+              <div className="titleWay">ЗАЯВКА</div>
+              <div className="textModalWay">
+                {roomWay || floorWay || siteWay || shopWay || prodWay} (
+                {prodWay}
+                <img src={arrow} alt="" className="arrow" />
+                {shopWay && <span>цех</span>} {shopWay}{" "}
+                {siteWay && shopWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}
+                {!siteWay && floorWay && shopWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}
+                {siteWay && <span>участок</span>} {siteWay}{" "}
+                {floorWay && siteWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}{" "}
+                {floorWay && <span>этаж</span>} {floorWay}{" "}
+                {roomWay && floorWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}{" "}
+                {roomWay && !floorWay && siteWay && !shopWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}{" "}
+                {roomWay && !floorWay && !siteWay && shopWay && (
+                  <img src={arrow} alt="" className="arrow" />
+                )}{" "}
+                {roomWay})
+              </div>
+              <div className="btns">
+                <button className="btnOn" onClick={hasModalWayOn}>
+                  Взять
+                </button>
+                <button className="btnOFF" onClick={hasModalWayOnSTOP}>
+                  Отмена
+                </button>
+              </div>
+            </div>
+          </Modal>
         </div>
         {/* {dataObj &&
           dataObj.map((item) => (
@@ -383,7 +545,7 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
             </div>
           ))} */}
       </div>
-      <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
+      {/* <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
         <div className="modalWay">
           <div className="titleWay">ЗАЯВКА</div>
           <div className="textModalWay">
@@ -401,6 +563,45 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
             {checkObj.floor && <span>этаж</span>} {checkObj.floor}{" "}
             {checkObj.room && <img src={arrow} alt="" className="arrow" />}{" "}
             {checkObj.room})
+          </div>
+          <div className="time">Время: {timeDiff} мин</div>
+          <div className="btns">
+            <button className="btnOn" onClick={hasModalWayOFF}>
+              Завершить
+            </button>
+            <button className="btnOFF" onClick={hasModalWayOFFStop}>
+              Отмена
+            </button>
+          </div>
+        </div>
+      </Modal> */}
+
+      <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
+        <div className="modalWay">
+          <div className="titleWay">ЗАЯВКА</div>
+          <div className="textModalWay">
+            {roomWay || floorWay || siteWay || shopWay || prodWay} ({prodWay}
+            <img src={arrow} alt="" className="arrow" />
+            {shopWay && <span>цех</span>} {shopWay}{" "}
+            {siteWay && shopWay && <img src={arrow} alt="" className="arrow" />}
+            {!siteWay && floorWay && shopWay && (
+              <img src={arrow} alt="" className="arrow" />
+            )}
+            {siteWay && <span>участок</span>} {siteWay}{" "}
+            {floorWay && siteWay && (
+              <img src={arrow} alt="" className="arrow" />
+            )}{" "}
+            {floorWay && <span>этаж</span>} {floorWay}{" "}
+            {roomWay && floorWay && (
+              <img src={arrow} alt="" className="arrow" />
+            )}{" "}
+            {roomWay && !floorWay && siteWay && !shopWay && (
+              <img src={arrow} alt="" className="arrow" />
+            )}{" "}
+            {roomWay && !floorWay && !siteWay && shopWay && (
+              <img src={arrow} alt="" className="arrow" />
+            )}{" "}
+            {roomWay})
           </div>
           <div className="time">Время: {timeDiff} мин</div>
           <div className="btns">
@@ -492,7 +693,7 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
         </div>
 
         {/* ПУТЬ */}
-        <div className={wayOf ? "way" : "wayOff"}>
+        {/* <div className={wayOf ? "way" : "wayOff"}>
           <div>
             {roomWay || floorWay || siteWay || shopWay || prodWay} ({prodWay}
             <img src={arrow} alt="" className="arrow" />
@@ -525,10 +726,10 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
               Завершить
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* END ПУТЬ  */}
-        <Modal modalActive={modalWay} setModalActive={setModalWay}>
+        {/* <Modal modalActive={modalWay} setModalActive={setModalWay}>
           <div className="modalWay">
             <div className="titleWay">ЗАЯВКА</div>
             <div className="textModalWay">
@@ -551,20 +752,35 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
               </button>
             </div>
           </div>
-        </Modal>
+        </Modal> */}
 
-        <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
+        {/* <Modal modalActive={modalWayEnd} setModalActive={setModalWayEnd}>
           <div className="modalWay">
             <div className="titleWay">ЗАЯВКА</div>
             <div className="textModalWay">
               {roomWay || floorWay || siteWay || shopWay || prodWay} ({prodWay}
               <img src={arrow} alt="" className="arrow" />
               {shopWay && <span>цех</span>} {shopWay}{" "}
-              {siteWay && <img src={arrow} alt="" className="arrow" />}
+              {siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
+              {!siteWay && floorWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}
               {siteWay && <span>участок</span>} {siteWay}{" "}
-              {floorWay && <img src={arrow} alt="" className="arrow" />}{" "}
+              {floorWay && siteWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
               {floorWay && <span>этаж</span>} {floorWay}{" "}
-              {roomWay && <img src={arrow} alt="" className="arrow" />}{" "}
+              {roomWay && floorWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && siteWay && !shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
+              {roomWay && !floorWay && !siteWay && shopWay && (
+                <img src={arrow} alt="" className="arrow" />
+              )}{" "}
               {roomWay})
             </div>
             <div className="time">Время: {timeDiff} мин</div>
@@ -577,7 +793,7 @@ const Home = ({ wayOfEnd, setWayOfEnd }) => {
               </button>
             </div>
           </div>
-        </Modal>
+        </Modal> */}
 
         <Modal modalActive={modalActive} setModalActive={setModalActive}>
           <div className="titleAppli">СОЗДАТЬ ЗАЯВКУ</div>

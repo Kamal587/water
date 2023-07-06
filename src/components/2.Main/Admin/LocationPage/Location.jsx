@@ -25,15 +25,12 @@ const Location = ({ modalActive, setModalActive }) => {
 
   // EDIT
   const editRow = (tableProps) => {
-    console.log(localDate);
     setEdit(true);
     let check = localDate.filter((item) => item.id === tableProps);
-    console.log(check);
+
     setEditArr(localDate?.filter((item) => item.id === tableProps)[0]);
     setAbc(+abc + 1);
     setEditID(tableProps);
-
-    console.log(editArr);
   };
 
   //
@@ -41,8 +38,6 @@ const Location = ({ modalActive, setModalActive }) => {
   const handleSubmitEdit = (event) => {
     event.preventDefault();
 
-    console.log("submit");
-    console.log(editArr);
     dispatch(editPlace({ editArr }));
     setEdit(false);
   };
@@ -51,7 +46,6 @@ const Location = ({ modalActive, setModalActive }) => {
     const { name, value } = event.target;
 
     setEditArr((values) => ({ ...values, [name]: value }));
-
   };
 
   const deleteRow = (tableProps) => {

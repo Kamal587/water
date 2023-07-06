@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
-  
   location: [],
 };
 const { v4: uuidv4 } = require("uuid");
@@ -21,7 +19,6 @@ const slice = createSlice({
       });
     },
     editLocal(state, action) {
-     
       let optID = action.payload.optionDate.option;
       let valueOpt = action.payload.optionDate.name;
 

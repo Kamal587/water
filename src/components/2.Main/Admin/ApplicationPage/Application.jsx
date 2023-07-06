@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { useTable } from "react-table";
+import { useTable, useFilters } from "react-table";
+import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
+import { ColumnFilter } from "./ColumnFilter";
 
 const Application = () => {
   const [datas, setDatas] = useState([]);
@@ -16,11 +18,15 @@ const Application = () => {
     () => [
       {
         Header: "№",
-        accessor: "number", // accessor is the "key" in the data
+        accessor: "number",
+
+        disableFilters: true,
+        // accessor is the "key" in the data
       },
       {
         Header: "ПРОИЗВОДСТВО",
         accessor: "product",
+        Filter: ColumnFilter,
       },
       {
         Header: "ЦЕХ",
@@ -41,10 +47,12 @@ const Application = () => {
       {
         Header: "ДАТА",
         accessor: "datestring",
+        disableFilters: true,
       },
       {
         Header: "ВРЕМЯ РЕАГИРОВАНИЯ  (минуты)",
         accessor: "time",
+        disableFilters: true,
       },
       {
         Header: "РАБОТНИК ФИО",
@@ -58,8 +66,15 @@ const Application = () => {
     []
   );
 
+  const defaultColumn = React.useMemo(
+    () => ({
+      Filter: ColumnFilter,
+    }),
+    []
+  );
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({ columns, data, defaultColumn }, useFilters);
 
   return (
     <div>
@@ -69,7 +84,11 @@ const Application = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps()}>
+                  {column.render("Header")}
+
+                  <div>{column.canFilter ? column.render("Filter") : null}</div>
+                </th>
               ))}
             </tr>
           ))}

@@ -10,13 +10,14 @@ const sliceObj = createSlice({
   initialState,
   reducers: {
     editObj(state, action) {
+      state.obj = [];
       state.obj.push({
-        id: action.payload.obj.id,
-        product: action.payload.obj.product,
-        shop: action.payload.obj.shop,
-        site: action.payload.obj.site,
-        floor: action.payload.obj.floor,
-        room: action.payload.obj.room,
+        id: action.payload.objWind.id,
+        product: action.payload.objWind.product,
+        shop: action.payload.objWind.shop,
+        site: action.payload.objWind.site,
+        floor: action.payload.objWind.floor,
+        room: action.payload.objWind.room,
       });
     },
   },

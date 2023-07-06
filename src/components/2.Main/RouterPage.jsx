@@ -30,7 +30,6 @@ const RouterPage = ({ modalActive, setModalActive }) => {
         }
       />
       <Route path="/application" element={<Application />} />
-      <Route path="/regist" element={<RegistPage />} />
     </Routes>
   );
 };
