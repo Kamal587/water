@@ -6,7 +6,6 @@ import arrow from "./../../../assets/Arrow.png";
 
 import "./Home.css";
 
-import { useNavigate } from "react-router-dom";
 import { editObj } from "../../../redux/obj";
 
 const Home = ({
@@ -37,8 +36,6 @@ const Home = ({
   const [valueAppli, setValueAppli] = useState(0);
   const [modalActive, setModalActive] = useState(false);
   // TIME
-  const [timeStart, setTimeStart] = useState([]);
-  const [timeEnd, setTimeEnd] = useState([]);
 
   // END TIME
   const [checkObj, setCheckObj] = useState([]);
@@ -51,11 +48,12 @@ const Home = ({
   //
   const data = useSelector((state) => state.location.location);
   const dataApply = useSelector((state) => state.apply.apply);
-  const dataObj = useSelector((state) => state.obj.obj);
 
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
   const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
-
+  console.log(prodWay);
+  console.log(applyArr);
+  console.log(workArr);
   const dispatch = useDispatch();
   useEffect(() => {}, [blogID, applyArr]);
 
@@ -466,7 +464,8 @@ const Home = ({
             </div>
             <div className="textWay">
               <span className="textWayRed">
-                Работает: <span className="workText">{prodWay}</span>
+                Работает:{" "}
+                <span className="workText">{workArr && workArr.name}</span>
               </span>
               <button className="btnWayEnd" onClick={hasWayClickEnd}>
                 Завершить

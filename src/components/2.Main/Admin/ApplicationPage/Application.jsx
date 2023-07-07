@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTable, useFilters } from "react-table";
-import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
+
 import { ColumnFilter } from "./ColumnFilter";
 
 const Application = () => {
@@ -47,7 +47,6 @@ const Application = () => {
       {
         Header: "ДАТА",
         accessor: "datestring",
-        disableFilters: true,
       },
       {
         Header: "ВРЕМЯ РЕАГИРОВАНИЯ  (минуты)",
