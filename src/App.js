@@ -13,6 +13,7 @@ function App() {
   const [roomWay, setRoomWay] = useState();
   const [timeDiff, setTimeDiff] = useState();
   const [timeStr, setTimeStr] = useState([]);
+  const [checkRecord, setCheckRecord] = useState(false);
   return (
     <div className="App">
       <Header />
@@ -31,6 +32,8 @@ function App() {
         setTimeDiff={setTimeDiff}
         timeStr={timeStr}
         setTimeStr={setTimeStr}
+        checkRecord={checkRecord}
+        setCheckRecord={setCheckRecord}
       />
     </div>
   );

@@ -3,7 +3,7 @@ import Navigate from "../Navigate/Navigate";
 import RouterPage from "../RouterPage";
 import s from "./Admin.module.css";
 
-const Admin = () => {
+const Admin = ({ checkRecord }) => {
   const [modalActive, setModalActive] = useState(false);
   return (
     <div className={s.wrap}>
@@ -11,7 +11,11 @@ const Admin = () => {
         <Navigate />
       </div>
       <div className={s.table}>
-        <RouterPage modalActive={modalActive} setModalActive={setModalActive} />
+        <RouterPage
+          checkRecord={checkRecord}
+          modalActive={modalActive}
+          setModalActive={setModalActive}
+        />
       </div>
     </div>
   );

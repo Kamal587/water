@@ -51,9 +51,7 @@ const Home = ({
 
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
   const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
-  console.log(prodWay);
-  console.log(applyArr);
-  console.log(workArr);
+
   const dispatch = useDispatch();
   useEffect(() => {}, [blogID, applyArr]);
 
@@ -303,6 +301,7 @@ const Home = ({
         timeDate,
       })
     );
+
     setModalWayEnd(true);
   };
 
@@ -331,9 +330,17 @@ const Home = ({
       d.getMinutes(),
     ];
     let strTimeBegin = timeBegine.join();
-
+    console.log(d);
     let datestring =
-      d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
+      d.getDate() +
+      "-" +
+      (d.getMonth() + 1) +
+      "-" +
+      d.getFullYear() +
+      "   " +
+      d.getHours() +
+      ":" +
+      d.getMinutes();
     setTimeStr(timeBegine);
     const waterDate = {
       product: workArr && workArr.product,
