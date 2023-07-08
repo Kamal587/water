@@ -21,8 +21,16 @@ const Main = ({
   setTimeDiff,
   timeStr,
   setTimeStr,
-  checkRecord,
-  setCheckRecord,
+  datastr,
+  setDatastr,
+  blogID,
+  setBlogID,
+  data,
+  applyArr,
+  dataApply,
+  workArr,
+  valueAppli,
+  setValueAppli,
 }) => {
   const [wayOfEnd, setWayOfEnd] = useState(false);
 
@@ -49,8 +57,16 @@ const Main = ({
               setTimeDiff={setTimeDiff}
               timeStr={timeStr}
               setTimeStr={setTimeStr}
-              checkRecord={checkRecord}
-              setCheckRecord={setCheckRecord}
+              datastr={datastr}
+              setDatastr={setDatastr}
+              blogID={blogID}
+              setBlogID={setBlogID}
+              workArr={workArr}
+              data={data}
+              applyArr={applyArr}
+              dataApply={dataApply}
+              valueAppli={valueAppli}
+              setValueAppli={setValueAppli}
             />
           }
         />
@@ -60,7 +76,7 @@ const Main = ({
           <Route path="place" element={<Location />} />
           <Route path="application" element={<Application />} /> */}
         </Route>
-        <Route path="/admin/*" element={<Admin checkRecord={checkRecord} />} />
+        <Route path="/admin/*" element={<Admin />} />
         <Route path="/regist" element={<RegistPage />} />
       </Routes>
     </div>

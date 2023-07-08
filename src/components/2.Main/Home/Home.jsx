@@ -25,15 +25,25 @@ const Home = ({
   setTimeDiff,
   timeStr,
   setTimeStr,
+  datastr,
+  setDatastr,
+  blogID,
+  setBlogID,
+  workArr,
+  data,
+  dataApply,
+  applyArr,
+  valueAppli,
+  setValueAppli,
 }) => {
   const [productBlog, setProductBlog] = useState(true);
-  const [blogID, setBlogID] = useState();
+
   const [blogShop, setBlogShop] = useState(true);
   const [blogFloor, setBlogFloor] = useState(true);
   const [blogSite, setBlogSite] = useState(true);
   const [blogRoom, setBlogRoom] = useState(true);
   const [titleRoom, setTitleRoom] = useState();
-  const [valueAppli, setValueAppli] = useState(0);
+
   const [modalActive, setModalActive] = useState(false);
   // TIME
 
@@ -46,11 +56,11 @@ const Home = ({
   const [wayOf, setWayOf] = useState(false);
 
   //
-  const data = useSelector((state) => state.location.location);
-  const dataApply = useSelector((state) => state.apply.apply);
+  // const data = useSelector((state) => state.location.location);
+  // const dataApply = useSelector((state) => state.apply.apply);
 
-  const workArr = blogID && data.filter((item) => item.id === blogID)[0];
-  const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
+  // const workArr = blogID && data.filter((item) => item.id === blogID)[0];
+  // const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
 
   const dispatch = useDispatch();
   useEffect(() => {}, [blogID, applyArr]);
@@ -291,16 +301,37 @@ const Home = ({
 
     setTimeDiff(time);
 
-    const timeDate = {
-      waterId: blogID,
+    // const waterDate = {
+    //   product: workArr && workArr.product,
+    //   room: workArr.room,
+    //   floor: workArr.floor,
+    //   site: workArr.site,
+    //   shop: workArr.shop,
+    //   water: valueAppli,
+    //   waterId: blogID,
+    //   datastr,
+    //   time: time,
+    // };
+    // console.log(datastr);
+    // console.log(time);
+    // console.log(waterDate);
+    // waterDate.product &&
+    //   dispatch(
+    //     editWater({
+    //       waterDate,
+    //     })
+    //   );
 
-      time,
-    };
-    dispatch(
-      editTime({
-        timeDate,
-      })
-    );
+    // const timeDate = {
+    //   waterId: blogID,
+
+    //   time,
+    // };
+    // dispatch(
+    //   editTime({
+    //     timeDate,
+    //   })
+    // );
 
     setModalWayEnd(true);
   };
@@ -330,7 +361,7 @@ const Home = ({
       d.getMinutes(),
     ];
     let strTimeBegin = timeBegine.join();
-    console.log(d);
+
     let datestring =
       d.getDate() +
       "-" +
@@ -342,26 +373,26 @@ const Home = ({
       ":" +
       d.getMinutes();
     setTimeStr(timeBegine);
-    const waterDate = {
-      product: workArr && workArr.product,
-      room: workArr.room,
-      floor: workArr.floor,
-      site: workArr.site,
-      shop: workArr.shop,
-      water: valueAppli,
-      waterId: blogID,
-      datestring,
-      time: strTimeBegin,
-    };
+    // const waterDate = {
+    //   product: workArr && workArr.product,
+    //   room: workArr.room,
+    //   floor: workArr.floor,
+    //   site: workArr.site,
+    //   shop: workArr.shop,
+    //   water: valueAppli,
+    //   waterId: blogID,
+    //   datestring,
+    //   time: strTimeBegin,
+    // };
 
-    waterDate.product &&
-      dispatch(
-        editWater({
-          waterDate,
-        })
-      );
+    // waterDate.product &&
+    //   dispatch(
+    //     editWater({
+    //       waterDate,
+    //     })
+    //   );
+    setDatastr(datestring);
 
-    setValueAppli(0);
     // let d = new Date();
     // let starts = moment(d);
     // let ends = moment();
@@ -370,8 +401,28 @@ const Home = ({
     setWayOf(false);
     setWayOfEnd(true);
   };
-
+  console.log(workArr);
   const hasModalWayOFF = () => {
+    const waterDate = {
+      product: workArr && workArr.product,
+      room: workArr.room,
+      floor: workArr.floor,
+      site: workArr.site,
+      shop: workArr.shop,
+      water: valueAppli,
+      waterId: blogID,
+      datastr,
+      time: timeDiff,
+    };
+    console.log(datastr);
+    console.log(timeDiff);
+    console.log(waterDate);
+    waterDate.product &&
+      dispatch(
+        editWater({
+          waterDate,
+        })
+      );
     setModalWayEnd(false);
     setWayOfEnd(false);
     setProdWay("");
@@ -385,6 +436,7 @@ const Home = ({
     setBlogSite(true);
 
     setProductBlog(true);
+    setValueAppli(0);
   };
 
   const hasModalWayOFFStop = () => {
