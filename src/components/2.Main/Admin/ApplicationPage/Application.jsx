@@ -9,7 +9,7 @@ const Application = () => {
   const apply = useSelector((state) => state.apply.apply);
   const localDateAppli = apply.filter((item) => typeof item.time == "number");
   const data = useMemo(() => datas, [datas]);
-
+  console.log(apply);
   useEffect(() => {
     setDatas(localDateAppli);
   }, []);

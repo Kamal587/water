@@ -19,7 +19,7 @@ function App() {
   const [valueAppli, setValueAppli] = useState(0);
   const data = useSelector((state) => state.location.location);
   const dataApply = useSelector((state) => state.apply.apply);
-
+  console.log(data);
   const workArr = blogID && data.filter((item) => item.id === blogID)[0];
   const applyArr = blogID && dataApply.filter((item) => item.id === blogID)[0];
   return (

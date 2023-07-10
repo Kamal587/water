@@ -101,6 +101,7 @@ const Users = ({ localDate, nameDate, modalActive, setModalActive }) => {
     useTable({ columns, data });
 
   const handleSubmit = (event) => {
+    console.log("asdasd");
     event.preventDefault();
     const optionDate = {
       name: userData.userName,

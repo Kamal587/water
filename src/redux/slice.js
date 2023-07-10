@@ -28,6 +28,7 @@ const slice = createSlice({
         }
         return trip;
       });
+      debugger;
     },
 
     editPlace(state, action) {
@@ -59,6 +60,7 @@ const slice = createSlice({
         }
         return trip;
       });
+      debugger;
     },
 
     removeLocal(state, action) {

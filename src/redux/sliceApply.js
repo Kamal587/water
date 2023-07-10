@@ -18,9 +18,11 @@ const sliceApply = createSlice({
         floor: action.payload.waterDate.floor,
         room: action.payload.waterDate.room,
         time: action.payload.waterDate.time,
-        datestring: action.payload.waterDate.datestring,
+        datestring: action.payload.waterDate.datastr,
         water: action.payload.waterDate.water,
+        name: action.payload.waterDate.userName,
       });
+      debugger;
     },
 
     editTime(state, action) {

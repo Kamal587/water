@@ -403,6 +403,7 @@ const Home = ({
   };
   console.log(workArr);
   const hasModalWayOFF = () => {
+    console.log("qqq");
     const waterDate = {
       product: workArr && workArr.product,
       room: workArr.room,
@@ -413,8 +414,9 @@ const Home = ({
       waterId: blogID,
       datastr,
       time: timeDiff,
+      userName: workArr.name,
     };
-    console.log(datastr);
+    console.log(dataApply);
     console.log(timeDiff);
     console.log(waterDate);
     waterDate.product &&
